@@ -10,7 +10,6 @@ The complete workflow is implemented in **`Used Car Price Prediction Competition
 - [Dataset](#dataset)
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
-- [How to Run](#how-to-run)
 - [Project Workflow](#project-workflow)
 - [Models and Results](#models-and-results)
 - [Generated Outputs](#generated-outputs)
@@ -100,69 +99,6 @@ The notebook is the main entry point. There is no standalone application, saved 
 | `jupyterlab` | Opening and running the notebook locally. |
 
 Exact package versions are not recorded in the notebook, and a dependency lock file is not supplied. Its use of `BaggingRegressor(estimator=...)` requires a scikit-learn version that supports that parameter. Several pandas operations use chained `fillna(..., inplace=True)` calls; see the compatibility note below.
-
-## How to Run
-
-### 1. Download the Project
-
-Download the notebook and this README from GitHub into a local folder. Place `Train_Set.csv` and `Test-Set.csv` in that same folder.
-
-Open a terminal in the project folder.
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it on Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Or on macOS / Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
-python -m pip install --upgrade pip
-python -m pip install numpy pandas matplotlib seaborn scikit-learn jupyterlab
-```
-
-This installs the dependencies without reproducing the original package versions. If a newer pandas version does not apply an in-place fill as expected, replace calls such as:
-
-```python
-trainData['fuel'].fillna(fuel_mode, inplace=True)
-```
-
-with explicit assignment:
-
-```python
-trainData['fuel'] = trainData['fuel'].fillna(fuel_mode)
-```
-
-Apply the same change to equivalent calls in the training and test preprocessing sections.
-
-### 4. Start JupyterLab
-
-```bash
-jupyter lab
-```
-
-Open **`Used Car Price Prediction Competition.ipynb`**, select the Python environment containing the installed packages, and run the cells from top to bottom. Restart the kernel before a complete rerun to avoid reusing modified data or model state.
-
-The CSV paths are relative to the notebook's working directory. Keep the filenames exactly as shown, including the underscore in `Train_Set.csv` and the hyphen in `Test-Set.csv`.
-
-### 5. Review the Results
-
-After successful execution, inspect the printed metrics, model comparison plot, and generated `price_predict.csv` file.
-
-Training multiple ensembles on hundreds of thousands of rows can take substantial time and memory. Bagging and Random Forest use `n_jobs=-1`, allowing them to use all available CPU cores.
 
 ## Project Workflow
 
